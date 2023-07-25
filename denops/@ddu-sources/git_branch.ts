@@ -127,7 +127,9 @@ export class Source extends BaseSource<Params, ActionData> {
                 );
               },
             }),
-          );
+          ).finally(() => {
+            controller.close();
+          });
       },
     });
   }
