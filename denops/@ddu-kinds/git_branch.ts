@@ -1,12 +1,12 @@
 import {
   ActionFlags,
   BaseKind,
-} from "https://deno.land/x/ddu_vim@v3.4.2/types.ts";
+} from "https://deno.land/x/ddu_vim@v3.4.4/types.ts";
 import type {
   Actions,
   DduItem,
-} from "https://deno.land/x/ddu_vim@v3.4.2/types.ts";
-import type { Denops } from "https://deno.land/x/ddu_vim@v3.4.2/deps.ts";
+} from "https://deno.land/x/ddu_vim@v3.4.4/types.ts";
+import type { Denops } from "https://deno.land/x/ddu_vim@v3.4.4/deps.ts";
 import { passthrough } from "../ddu-source-git_branch/message.ts";
 
 export type ActionData = {
