@@ -25,47 +25,60 @@ export type RefName = {
 
 type Params = Record<never, never>;
 
-async function callProcessByBranch(
+async function callGit(
   denops: Denops,
-  items: DduItem[],
-  subargs: string[],
+  cwd: string,
+  args: string[],
 ) {
-  if (items.length != 1) {
-    await denops.call(
-      "ddu#util#print_error",
-      "invalid action calling: it can accept only one item",
-      "ddu-source-git_branch",
-    );
-    return ActionFlags.None;
-  }
-  const action = items[0].action as ActionData;
-  const args = [
-    ...subargs,
-    action.refName.branch,
-  ];
-  passthrough(
+  await passthrough(
     denops,
     new Deno.Command("git", {
       args,
-      cwd: action.cwd,
+      cwd: cwd,
       stdin: "null",
       stderr: "piped",
       stdout: "piped",
     }).spawn(),
   );
-  return ActionFlags.None;
 }
 
 export class Kind extends BaseKind<Params> {
   override actions: Actions<Params> = {
     switch: async ({ denops, items }) => {
-      return await callProcessByBranch(denops, items, ["switch"]);
+      if (items.length != 1) {
+        await denops.call(
+          "ddu#util#print_error",
+          "invalid action calling: it can accept only one item",
+          "ddu-kind-git_branch",
+        );
+        return ActionFlags.None;
+      }
+      const { cwd, refName } = items[0].action as ActionData;
+      if (refName.remote == "") {
+        await callGit(denops, cwd, ["switch", refName.branch]);
+        return ActionFlags.None;
+      }
+      await callGit(denops, cwd, [
+        "switch",
+        "--guess",
+        "--track",
+        `${refName.remote}/${refName.branch}`,
+      ]);
+      return ActionFlags.None;
     },
     delete: async ({ denops, items }) => {
-      return await callProcessByBranch(denops, items, ["branch", "-d"]);
+      for (const item of items) {
+        const { cwd, refName } = item.action as ActionData;
+        await callGit(denops, cwd, ["branch", "-d", refName.branch]);
+      }
+      return ActionFlags.None;
     },
     deleteForce: async ({ denops, items }) => {
-      return await callProcessByBranch(denops, items, ["branch", "-D"]);
+      for (const item of items) {
+        const { cwd, refName } = item.action as ActionData;
+        await callGit(denops, cwd, ["branch", "-D", refName.branch]);
+      }
+      return ActionFlags.None;
     },
   };
   params(): Params {

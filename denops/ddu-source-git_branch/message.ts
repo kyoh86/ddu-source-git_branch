@@ -36,7 +36,7 @@ export class MessageStream extends WritableStream<string> {
   }
 }
 
-export function passthrough(
+export async function passthrough(
   denops: Denops,
   { status, stderr, stdout }: Deno.ChildProcess,
 ) {
@@ -48,7 +48,7 @@ export function passthrough(
         .pipeTo(new ErrorStream(denops));
     }
   });
-  stdout
+  await stdout
     .pipeThrough(new TextDecoderStream())
     .pipeThrough(new TextLineStream())
     .pipeTo(new MessageStream(denops));
