@@ -90,6 +90,16 @@ export class Kind extends BaseKind<Params> {
       await callGit(denops, cwd, ["branch", branchName]);
       return ActionFlags.RefreshItems;
     },
+    rename: async ({ denops, items }) => {
+      const { cwd, refName } = items[0].action as ActionData;
+      const branchName = await fn.input(
+        denops,
+        `Rename branch name ${refName.branch} => `,
+        refName.branch,
+      );
+      await callGit(denops, cwd, ["branch", "-m", refName.branch, branchName]);
+      return ActionFlags.RefreshItems;
+    },
   };
   params(): Params {
     return {};
