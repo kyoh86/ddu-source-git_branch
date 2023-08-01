@@ -113,7 +113,7 @@ create
 
                                          *ddu-source-git_branch-action-rename*
 rename
-	Rename select branch.
+	Rename a selected branch.
 
 
 ==============================================================================
