@@ -109,7 +109,7 @@ deleteForce
 
                                          *ddu-source-git_branch-action-create*
 create
-	Create new branch.
+	Create a new branch based on the point that HEAD currently points.
 
                                          *ddu-source-git_branch-action-rename*
 rename
