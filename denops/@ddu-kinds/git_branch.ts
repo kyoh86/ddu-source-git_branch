@@ -83,7 +83,10 @@ export class Kind extends BaseKind<Params> {
     },
     create: async ({ denops, items }) => {
       const { cwd } = items[0].action as ActionData;
-      const branchName = await fn.input(denops, "Create branch name you entered => ");
+      const branchName = await fn.input(
+        denops,
+        "Create branch name you entered => ",
+      );
       await callGit(denops, cwd, ["branch", branchName]);
       return ActionFlags.RefreshItems;
     },
