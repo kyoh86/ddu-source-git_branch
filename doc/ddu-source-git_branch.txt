@@ -107,6 +107,14 @@ delete
 deleteForce
 	Delete the branch (even if not merged).
 
+                                         *ddu-source-git_branch-action-create*
+create
+	Create new branch.
+
+                                         *ddu-source-git_branch-action-rename*
+rename
+	Rename select branch.
+
 
 ==============================================================================
 Columns ~
