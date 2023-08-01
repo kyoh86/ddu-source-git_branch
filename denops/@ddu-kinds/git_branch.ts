@@ -7,6 +7,7 @@ import type {
   DduItem,
 } from "https://deno.land/x/ddu_vim@v3.4.4/types.ts";
 import type { Denops } from "https://deno.land/x/ddu_vim@v3.4.4/deps.ts";
+import { fn } from "https://deno.land/x/ddu_vim@v3.4.4/deps.ts";
 import { passthrough } from "../ddu-source-git_branch/message.ts";
 
 export type ActionData = {
@@ -79,6 +80,25 @@ export class Kind extends BaseKind<Params> {
         await callGit(denops, cwd, ["branch", "-D", refName.branch]);
       }
       return ActionFlags.None;
+    },
+    create: async ({ denops, items }) => {
+      const { cwd } = items[0].action as ActionData;
+      const branchName = await fn.input(
+        denops,
+        "Create branch name you entered => ",
+      );
+      await callGit(denops, cwd, ["branch", branchName]);
+      return ActionFlags.RefreshItems;
+    },
+    rename: async ({ denops, items }) => {
+      const { cwd, refName } = items[0].action as ActionData;
+      const branchName = await fn.input(
+        denops,
+        `Rename branch name ${refName.branch} => `,
+        refName.branch,
+      );
+      await callGit(denops, cwd, ["branch", "-m", refName.branch, branchName]);
+      return ActionFlags.RefreshItems;
     },
   };
   params(): Params {

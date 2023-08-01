@@ -107,6 +107,14 @@ delete
 deleteForce
 	Delete the branch (even if not merged).
 
+                                         *ddu-source-git_branch-action-create*
+create
+	Create a new branch based on the point that HEAD currently points.
+
+                                         *ddu-source-git_branch-action-rename*
+rename
+	Rename a selected branch.
+
 
 ==============================================================================
 Columns ~
