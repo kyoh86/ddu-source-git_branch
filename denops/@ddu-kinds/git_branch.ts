@@ -2,13 +2,9 @@ import {
   ActionFlags,
   BaseKind,
 } from "https://deno.land/x/ddu_vim@v3.4.4/types.ts";
-import type {
-  Actions,
-  DduItem,
-} from "https://deno.land/x/ddu_vim@v3.4.4/types.ts";
-import type { Denops } from "https://deno.land/x/ddu_vim@v3.4.4/deps.ts";
+import type { Actions } from "https://deno.land/x/ddu_vim@v3.4.4/types.ts";
 import { fn } from "https://deno.land/x/ddu_vim@v3.4.4/deps.ts";
-import { passthrough } from "../ddu-source-git_branch/message.ts";
+import { pipe } from "../ddu-source-git_branch/message.ts";
 
 export type ActionData = {
   isHead: boolean;
@@ -26,23 +22,6 @@ export type RefName = {
 
 type Params = Record<never, never>;
 
-async function callGit(
-  denops: Denops,
-  cwd: string,
-  args: string[],
-) {
-  await passthrough(
-    denops,
-    new Deno.Command("git", {
-      args,
-      cwd: cwd,
-      stdin: "null",
-      stderr: "piped",
-      stdout: "piped",
-    }).spawn(),
-  );
-}
-
 export class Kind extends BaseKind<Params> {
   override actions: Actions<Params> = {
     switch: async ({ denops, items }) => {
@@ -56,28 +35,37 @@ export class Kind extends BaseKind<Params> {
       }
       const { cwd, refName } = items[0].action as ActionData;
       if (refName.remote == "") {
-        await callGit(denops, cwd, ["switch", refName.branch]);
+        await pipe(denops, "git", { cwd, args: ["switch", refName.branch] });
         return ActionFlags.None;
       }
-      await callGit(denops, cwd, [
-        "switch",
-        "--guess",
-        "--track",
-        `${refName.remote}/${refName.branch}`,
-      ]);
+      await pipe(denops, "git", {
+        cwd,
+        args: [
+          "switch",
+          "--guess",
+          "--track",
+          `${refName.remote}/${refName.branch}`,
+        ],
+      });
       return ActionFlags.None;
     },
     delete: async ({ denops, items }) => {
       for (const item of items) {
         const { cwd, refName } = item.action as ActionData;
-        await callGit(denops, cwd, ["branch", "-d", refName.branch]);
+        await pipe(denops, "git", {
+          cwd,
+          args: ["branch", "-d", refName.branch],
+        });
       }
       return ActionFlags.None;
     },
     deleteForce: async ({ denops, items }) => {
       for (const item of items) {
         const { cwd, refName } = item.action as ActionData;
-        await callGit(denops, cwd, ["branch", "-D", refName.branch]);
+        await pipe(denops, "git", {
+          cwd,
+          args: ["branch", "-D", refName.branch],
+        });
       }
       return ActionFlags.None;
     },
@@ -87,7 +75,7 @@ export class Kind extends BaseKind<Params> {
         denops,
         "Create branch name you entered => ",
       );
-      await callGit(denops, cwd, ["branch", branchName]);
+      await pipe(denops, "git", { cwd, args: ["branch", branchName] });
       return ActionFlags.RefreshItems;
     },
     rename: async ({ denops, items }) => {
@@ -97,7 +85,10 @@ export class Kind extends BaseKind<Params> {
         `Rename branch name ${refName.branch} => `,
         refName.branch,
       );
-      await callGit(denops, cwd, ["branch", "-m", refName.branch, branchName]);
+      await pipe(denops, "git", {
+        cwd,
+        args: ["branch", "-m", refName.branch, branchName],
+      });
       return ActionFlags.RefreshItems;
     },
   };
