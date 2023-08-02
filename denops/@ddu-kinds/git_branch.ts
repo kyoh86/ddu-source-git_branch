@@ -77,6 +77,27 @@ export class Kind extends BaseKind<Params> {
       }
       return ActionFlags.None;
     },
+    copy: async ({ denops, items }) => {
+      const item = await ensureOnlyOneItem(denops, items);
+      if (!item) {
+        return ActionFlags.None;
+      }
+      const { refName, isHead, cwd } = item.action as ActionData;
+      const branchName = await fn.input(
+        denops,
+        "Copy to new branch name you entered => ",
+      );
+      const args = ["branch", branchName];
+      if (isHead) {
+        args.push(
+          refName.remote == ""
+            ? refName.branch
+            : `${refName.remote}/${refName.branch}`,
+        );
+      }
+      await pipe(denops, "git", { cwd, args });
+      return ActionFlags.RefreshItems;
+    },
     create: async ({ denops, items }) => {
       const item = await ensureOnlyOneItem(denops, items);
       if (!item) {
