@@ -22,18 +22,26 @@ export type RefName = {
 
 type Params = Record<never, never>;
 
+async function ensureOnlyOneItem(denops: Denops, items: DduItem[]) {
+  if (items.length != 1) {
+    await denops.call(
+      "ddu#util#print_error",
+      "invalid action calling: it can accept only one item",
+      "ddu-kind-git_commit",
+    );
+    return;
+  }
+  return items[0];
+}
+
 export class Kind extends BaseKind<Params> {
   override actions: Actions<Params> = {
     switch: async ({ denops, items }) => {
-      if (items.length != 1) {
-        await denops.call(
-          "ddu#util#print_error",
-          "invalid action calling: it can accept only one item",
-          "ddu-kind-git_branch",
-        );
+      const item = await ensureOnlyOneItem(denops, items);
+      if (!item) {
         return ActionFlags.None;
       }
-      const { cwd, refName } = items[0].action as ActionData;
+      const { cwd, refName } = item.action as ActionData;
       if (refName.remote == "") {
         await pipe(denops, "git", { cwd, args: ["switch", refName.branch] });
         return ActionFlags.None;
@@ -70,7 +78,11 @@ export class Kind extends BaseKind<Params> {
       return ActionFlags.None;
     },
     create: async ({ denops, items }) => {
-      const { cwd } = items[0].action as ActionData;
+      const item = await ensureOnlyOneItem(denops, items);
+      if (!item) {
+        return ActionFlags.None;
+      }
+      const { cwd } = item.action as ActionData;
       const branchName = await fn.input(
         denops,
         "Create branch name you entered => ",
@@ -79,7 +91,11 @@ export class Kind extends BaseKind<Params> {
       return ActionFlags.RefreshItems;
     },
     rename: async ({ denops, items }) => {
-      const { cwd, refName } = items[0].action as ActionData;
+      const item = await ensureOnlyOneItem(denops, items);
+      if (!item) {
+        return ActionFlags.None;
+      }
+      const { cwd, refName } = item.action as ActionData;
       const branchName = await fn.input(
         denops,
         `Rename branch name ${refName.branch} => `,
