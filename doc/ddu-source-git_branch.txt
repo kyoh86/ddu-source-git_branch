@@ -23,6 +23,9 @@ Introduction ~
 
 ddu.vim source shows branches in the repository.
 
+This plugin calls `git` from the |current-directory| as default.
+If you want to change the path, you can use |ddu-source-option-path|.
+
 
 ==============================================================================
 Install ~
@@ -48,6 +51,17 @@ Examples ~
 	    \ })
 <
 
+>
+	" Use git_diff_tree source in the specified path.
+	" Call it for the current buffer for example:
+	call ddu#start({
+	    \ 'sources': [{
+	    \    'name': 'git_branch',
+	    \    'options': { 'path': expand("%:p") }
+	    \ }],
+	    \ 'kindOptions': { 'file': { 'defaultAction': 'switch' } }
+	    \ })
+<
 
 >
 	" Use git_branch source with columns.
@@ -90,13 +104,7 @@ local
                                             *ddu-source-git_branch-params-cwd*
 cwd
 	(string)
-	Get commit logs as if git is called in the path instead of the current
-	working directory (like `git -C`).
-	You can set like below:
-		`expand("%:p")`: calls git from the current buffer dir.
-		`getcwd()`: calls git from the current working directory.
-
-	Default: |getcwd()|
+	DEPRECATED. Use |ddu-source-option-path| instead.
 
 ==============================================================================
 Actions ~
