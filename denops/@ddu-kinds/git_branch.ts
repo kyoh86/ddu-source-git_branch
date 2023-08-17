@@ -2,9 +2,13 @@ import {
   ActionFlags,
   BaseKind,
 } from "https://deno.land/x/ddu_vim@v3.4.4/types.ts";
-import type { Actions } from "https://deno.land/x/ddu_vim@v3.4.4/types.ts";
+import type {
+  Actions,
+  Previewer,
+} from "https://deno.land/x/ddu_vim@v3.4.4/types.ts";
 import { fn } from "https://deno.land/x/ddu_vim@v3.4.4/deps.ts";
 import { pipe } from "../ddu-source-git_branch/message.ts";
+import { GetPreviewerArguments } from "https://deno.land/x/ddu_vim@v3.4.4/base/kind.ts";
 
 export type ActionData = {
   isHead: boolean;
@@ -131,5 +135,23 @@ export class Kind extends BaseKind<Params> {
   };
   params(): Params {
     return {};
+  }
+
+  async getPreviewer({
+    item,
+  }: GetPreviewerArguments): Promise<Previewer | undefined> {
+    const { cwd, refName } = item.action as ActionData;
+    return await Promise.resolve({
+      kind: "terminal",
+      cmds: [
+        "git",
+        "-C",
+        cwd,
+        "log",
+        refName.remote == ""
+          ? refName.branch
+          : `${refName.remote}/${refName.branch}`,
+      ],
+    });
   }
 }
