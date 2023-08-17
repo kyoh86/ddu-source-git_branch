@@ -48,7 +48,7 @@ Examples ~
 	    \ 'sources': [{
 	    \    'name': 'git_branch',
 	    \ }],
-	    \ 'kindOptions': { 'file': { 'defaultAction': 'switch' } }
+	    \ 'kindOptions': { 'git_branch': { 'defaultAction': 'switch' } }
 	    \ })
 <
 
@@ -60,7 +60,7 @@ Examples ~
 	    \    'name': 'git_branch',
 	    \    'options': { 'path': expand("%:p") }
 	    \ }],
-	    \ 'kindOptions': { 'file': { 'defaultAction': 'switch' } }
+	    \ 'kindOptions': { 'git_branch': { 'defaultAction': 'switch' } }
 	    \ })
 <
 
@@ -79,7 +79,7 @@ Examples ~
 	    \      ],
 	    \    },
 	    \ }],
-	    \ 'kindOptions': { 'file': { 'defaultAction': 'switch' } }
+	    \ 'kindOptions': { 'git_branch': { 'defaultAction': 'switch' } }
 	    \ })
 <
 
