@@ -155,7 +155,7 @@ export class Kind extends BaseKind<Params> {
             "log",
             refName.remote == ""
               ? refName.branch
-              : `${refName}.remote, ${refName.branch}`,
+              : `${refName.remote}/${refName.branch}`,
           ].join(" ")
         }`,
       ],
