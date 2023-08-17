@@ -144,20 +144,13 @@ export class Kind extends BaseKind<Params> {
     return await Promise.resolve({
       kind: "terminal",
       cmds: [
-        "sh",
-        "-c",
-        `${
-          [
-            "cd",
-            cwd,
-            "&&",
-            "git",
-            "log",
-            refName.remote == ""
-              ? refName.branch
-              : `${refName.remote}/${refName.branch}`,
-          ].join(" ")
-        }`,
+        "git",
+        "-C",
+        cwd,
+        "log",
+        refName.remote == ""
+          ? refName.branch
+          : `${refName.remote}/${refName.branch}`,
       ],
     });
   }
