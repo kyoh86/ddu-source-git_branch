@@ -140,15 +140,24 @@ export class Kind extends BaseKind<Params> {
   async getPreviewer({
     item,
   }: GetPreviewerArguments): Promise<Previewer | undefined> {
-    const data = item.action as ActionData;
+    const { cwd, refName } = item.action as ActionData;
     return await Promise.resolve({
       kind: "terminal",
       cmds: [
-        "git",
-        "log",
-        data.refName.remote == ""
-          ? data.refName.branch
-          : `${data.refName}.remote, ${data.refName.branch}`,
+        "sh",
+        "-c",
+        `${
+          [
+            "cd",
+            cwd,
+            "&&",
+            "git",
+            "log",
+            refName.remote == ""
+              ? refName.branch
+              : `${refName}.remote, ${refName.branch}`,
+          ].join(" ")
+        }`,
       ],
     });
   }
