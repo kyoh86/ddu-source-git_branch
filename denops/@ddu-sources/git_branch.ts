@@ -145,6 +145,6 @@ export class Source extends BaseSource<Params, ActionData> {
   }
 
   override params(): Params {
-    return { remote: true, local: true };
+    return { remote: false, local: true };
   }
 }
