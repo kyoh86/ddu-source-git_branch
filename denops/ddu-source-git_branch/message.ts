@@ -60,4 +60,3 @@ export async function pipe(
     .pipeThrough(new TextLineStream())
     .pipeTo(new MessageStream(denops));
 }
-
