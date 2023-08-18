@@ -24,7 +24,7 @@ export type RefName = {
   branch: string; // branch name (like "main")
 };
 
-type Params = Record<never, never>;
+type Params = Record<PropertyKey, never>;
 
 async function ensureOnlyOneItem(denops: Denops, items: DduItem[]) {
   if (items.length != 1) {
