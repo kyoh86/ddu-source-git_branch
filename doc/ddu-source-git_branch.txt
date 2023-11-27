@@ -147,15 +147,19 @@ Actions ~
 
                                          *ddu-source-git_branch-action-switch*
 switch
-	Switches to the branch.
+	Switches to the selected branch.
 
                                          *ddu-source-git_branch-action-delete*
 delete
-	Delete fully merged branch.
+	Delete the selected branch if it is fully merged.
 
                                     *ddu-source-git_branch-action-deleteForce*
 deleteForce
-	Delete the branch (even if not merged).
+	Delete the selected branch (even if not merged).
+
+                                     *ddu-source-git_branch-action-createFrom*
+createFrom
+	Create a new branch based on the selected branch.
 
                                          *ddu-source-git_branch-action-create*
 create
@@ -164,6 +168,10 @@ create
                                          *ddu-source-git_branch-action-rename*
 rename
 	Rename a selected branch.
+
+                                       *ddu-source-git_branch-action-yankName*
+yankName
+	Yank a name of the selected branch.
 
 
 ==============================================================================

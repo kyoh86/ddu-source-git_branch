@@ -28,6 +28,11 @@ export type RefName = {
 
 type Params = Record<PropertyKey, never>;
 
+async function yank(denops: Denops, value: string) {
+  await fn.setreg(denops, '"', value, "v");
+  await fn.setreg(denops, await vars.v.get(denops, "register"), value, "v");
+}
+
 async function ensureOnlyOneItem(denops: Denops, items: DduItem[]) {
   if (items.length != 1) {
     await denops.call(
@@ -83,7 +88,19 @@ export class Kind extends BaseKind<Params> {
       }
       return ActionFlags.None;
     },
-    copy: async ({ denops, items }) => {
+    yankName: async ({ denops, items }) => {
+      const item = await ensureOnlyOneItem(denops, items);
+      if (!item) {
+        return ActionFlags.None;
+      }
+      const { refName } = item.action as ActionData;
+      const name = refName.remote == ""
+        ? refName.branch
+        : `${refName.remote}/${refName.branch}`;
+      await yank(denops, name);
+      return ActionFlags.None;
+    },
+    createFrom: async ({ denops, items }) => {
       const item = await ensureOnlyOneItem(denops, items);
       if (!item) {
         return ActionFlags.None;
@@ -94,7 +111,7 @@ export class Kind extends BaseKind<Params> {
         "Copy to new branch name you entered => ",
       );
       const args = ["branch", branchName];
-      if (isHead) {
+      if (!isHead) {
         args.push(
           refName.remote == ""
             ? refName.branch
