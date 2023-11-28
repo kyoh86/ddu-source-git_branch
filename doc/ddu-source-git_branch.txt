@@ -165,6 +165,10 @@ createFrom
 create
 	Create a new branch based on the point that HEAD currently points.
 
+                                       *ddu-source-git_branch-action-rebaseTo*
+rebaseTo
+	Rebase to the selected branch.
+
                                          *ddu-source-git_branch-action-rename*
 rename
 	Rename a selected branch.

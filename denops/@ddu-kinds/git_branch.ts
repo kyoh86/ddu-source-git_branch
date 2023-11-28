@@ -38,7 +38,7 @@ async function ensureOnlyOneItem(denops: Denops, items: DduItem[]) {
     await denops.call(
       "ddu#util#print_error",
       "invalid action calling: it can accept only one item",
-      "ddu-kind-git_commit",
+      "ddu-kind-git_branch",
     );
     return;
   }
@@ -133,6 +133,29 @@ export class Kind extends BaseKind<Params> {
       );
       await pipe(denops, "git", { cwd, args: ["branch", branchName] });
       return ActionFlags.RefreshItems;
+    },
+    rebaseTo: async ({ denops, items }) => {
+      const item = await ensureOnlyOneItem(denops, items);
+      if (!item) {
+        return ActionFlags.None;
+      }
+      const { refName, isHead, cwd } = item.action as ActionData;
+      if (isHead) {
+        await denops.call(
+          "ddu#util#print_error",
+          "invalid action calling: it cannot rebase to the head branch",
+          "ddu-kind-git_branch",
+        );
+        return ActionFlags.None;
+      }
+      const args = ["rebase"];
+      args.push(
+        refName.remote == ""
+          ? refName.branch
+          : `${refName.remote}/${refName.branch}`,
+      );
+      await pipe(denops, "git", { cwd, args });
+      return ActionFlags.None;
     },
     rename: async ({ denops, items }) => {
       const item = await ensureOnlyOneItem(denops, items);
