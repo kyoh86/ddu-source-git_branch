@@ -1,16 +1,16 @@
 import {
   ActionFlags,
   BaseKind,
-} from "https://deno.land/x/ddu_vim@v3.6.0/types.ts";
+} from "https://deno.land/x/ddu_vim@v3.8.1/types.ts";
 import type {
   Actions,
   DduItem,
   Previewer,
-} from "https://deno.land/x/ddu_vim@v3.6.0/types.ts";
-import type { Denops } from "https://deno.land/x/ddu_vim@v3.6.0/deps.ts";
-import { fn, vars } from "https://deno.land/x/ddu_vim@v3.6.0/deps.ts";
+} from "https://deno.land/x/ddu_vim@v3.8.1/types.ts";
+import type { Denops } from "https://deno.land/x/ddu_vim@v3.8.1/deps.ts";
+import { fn, vars } from "https://deno.land/x/ddu_vim@v3.8.1/deps.ts";
 import { pipe } from "../ddu-source-git_branch/message.ts";
-import { GetPreviewerArguments } from "https://deno.land/x/ddu_vim@v3.6.0/base/kind.ts";
+import { GetPreviewerArguments } from "https://deno.land/x/ddu_vim@v3.8.1/base/kind.ts";
 
 export type ActionData = {
   isHead: boolean;
