@@ -8,8 +8,9 @@ import type {
   Previewer,
 } from "https://deno.land/x/ddu_vim@v3.8.1/types.ts";
 import type { Denops } from "https://deno.land/x/ddu_vim@v3.8.1/deps.ts";
-import { fn, vars } from "https://deno.land/x/ddu_vim@v3.8.1/deps.ts";
-import { pipe } from "../ddu-source-git_branch/message.ts";
+import { fn } from "https://deno.land/x/ddu_vim@v3.8.1/deps.ts";
+import { pipe } from "https://denopkg.com/kyoh86/denops_util@v0.0.1/pipe.ts";
+import { yank } from "https://denopkg.com/kyoh86/denops_util@v0.0.1/yank.ts";
 import { GetPreviewerArguments } from "https://deno.land/x/ddu_vim@v3.8.1/base/kind.ts";
 
 export type ActionData = {
@@ -27,11 +28,6 @@ export type RefName = {
 };
 
 type Params = Record<PropertyKey, never>;
-
-async function yank(denops: Denops, value: string) {
-  await fn.setreg(denops, '"', value, "v");
-  await fn.setreg(denops, await vars.v.get(denops, "register"), value, "v");
-}
 
 async function ensureOnlyOneItem(denops: Denops, items: DduItem[]) {
   if (items.length != 1) {
