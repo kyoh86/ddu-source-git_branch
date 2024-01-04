@@ -2,11 +2,11 @@ import type { GatherArguments } from "https://deno.land/x/ddu_vim@v3.9.0/base/so
 import { fn } from "https://deno.land/x/ddu_vim@v3.9.0/deps.ts";
 import { treePath2Filename } from "https://deno.land/x/ddu_vim@v3.9.0/utils.ts";
 import { BaseSource, Item } from "https://deno.land/x/ddu_vim@v3.9.0/types.ts";
-import { TextLineStream } from "https://deno.land/std@0.210.0/streams/text_line_stream.ts";
 import { ChunkedStream } from "https://deno.land/x/chunked_stream@0.1.2/mod.ts";
 
 import { ActionData, RefName } from "../@ddu-kinds/git_branch.ts";
-import { EchomsgStream } from "https://denopkg.com/kyoh86/denops_util@v0.0.1/echomsg_stream.ts";
+import { echoerrCommand } from "https://denopkg.com/kyoh86/denops_util@v0.0.3/command.ts";
+import { TextLineStream } from "https://deno.land/std@0.210.0/streams/mod.ts";
 
 type Params = {
   remote: boolean;
@@ -105,7 +105,7 @@ export class Source extends BaseSource<Params, ActionData> {
         }
         const cwd = sourceParams.cwd ??
           (path && path !== "" ? path : await fn.getcwd(denops));
-        const { status, stderr, stdout } = new Deno.Command("git", {
+        const { wait, stdout } = echoerrCommand(denops, "git", {
           args: [
             "for-each-ref",
             "--omit-empty",
@@ -113,33 +113,25 @@ export class Source extends BaseSource<Params, ActionData> {
             formatRef(),
           ],
           cwd,
-          stdin: "null",
-          stderr: "piped",
-          stdout: "piped",
-        }).spawn();
-        status.then((stat) => {
-          if (!stat.success) {
-            stderr
-              .pipeThrough(new TextDecoderStream())
-              .pipeThrough(new TextLineStream())
-              .pipeTo(new EchomsgStream(denops, "ErrorMsg"));
-          }
         });
-        stdout
-          .pipeThrough(new TextDecoderStream())
-          .pipeThrough(new TextLineStream())
-          .pipeThrough(new ChunkedStream({ chunkSize: 1000 }))
-          .pipeTo(
-            new WritableStream<string[]>({
-              write: (refs: string[]) => {
-                controller.enqueue(
-                  flatMapRefs(refs, sourceParams, cwd),
-                );
-              },
+
+        await Promise.all([
+          wait,
+          stdout
+            .pipeThrough(new TextLineStream())
+            .pipeThrough(new ChunkedStream({ chunkSize: 1000 }))
+            .pipeTo(
+              new WritableStream<string[]>({
+                write: (refs: string[]) => {
+                  controller.enqueue(
+                    flatMapRefs(refs, sourceParams, cwd),
+                  );
+                },
+              }),
+            ).finally(() => {
+              controller.close();
             }),
-          ).finally(() => {
-            controller.close();
-          });
+        ]);
       },
     });
   }

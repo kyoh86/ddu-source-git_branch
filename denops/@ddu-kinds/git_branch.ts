@@ -9,8 +9,8 @@ import type {
 } from "https://deno.land/x/ddu_vim@v3.9.0/types.ts";
 import type { Denops } from "https://deno.land/x/ddu_vim@v3.9.0/deps.ts";
 import { fn } from "https://deno.land/x/ddu_vim@v3.9.0/deps.ts";
-import { pipe } from "https://denopkg.com/kyoh86/denops_util@v0.0.1/pipe.ts";
-import { yank } from "https://denopkg.com/kyoh86/denops_util@v0.0.1/yank.ts";
+import { echoallCommand } from "https://denopkg.com/kyoh86/denops_util@v0.0.3/command.ts";
+import { yank } from "https://denopkg.com/kyoh86/denops_util@v0.0.3/yank.ts";
 import { GetPreviewerArguments } from "https://deno.land/x/ddu_vim@v3.9.0/base/kind.ts";
 
 export type ActionData = {
@@ -50,10 +50,13 @@ export class Kind extends BaseKind<Params> {
       }
       const { cwd, refName } = item.action as ActionData;
       if (refName.remote == "") {
-        await pipe(denops, "git", { cwd, args: ["switch", refName.branch] });
+        await echoallCommand(denops, "git", {
+          cwd,
+          args: ["switch", refName.branch],
+        });
         return ActionFlags.None;
       }
-      await pipe(denops, "git", {
+      await echoallCommand(denops, "git", {
         cwd,
         args: [
           "switch",
@@ -67,7 +70,7 @@ export class Kind extends BaseKind<Params> {
     delete: async ({ denops, items }) => {
       for (const item of items) {
         const { cwd, refName } = item.action as ActionData;
-        await pipe(denops, "git", {
+        await echoallCommand(denops, "git", {
           cwd,
           args: ["branch", "-d", refName.branch],
         });
@@ -77,7 +80,7 @@ export class Kind extends BaseKind<Params> {
     deleteForce: async ({ denops, items }) => {
       for (const item of items) {
         const { cwd, refName } = item.action as ActionData;
-        await pipe(denops, "git", {
+        await echoallCommand(denops, "git", {
           cwd,
           args: ["branch", "-D", refName.branch],
         });
@@ -114,7 +117,7 @@ export class Kind extends BaseKind<Params> {
             : `${refName.remote}/${refName.branch}`,
         );
       }
-      await pipe(denops, "git", { cwd, args });
+      await echoallCommand(denops, "git", { cwd, args });
       return ActionFlags.RefreshItems;
     },
     create: async ({ denops, items }) => {
@@ -127,7 +130,10 @@ export class Kind extends BaseKind<Params> {
         denops,
         "Create branch name you entered => ",
       );
-      await pipe(denops, "git", { cwd, args: ["branch", branchName] });
+      await echoallCommand(denops, "git", {
+        cwd,
+        args: ["branch", branchName],
+      });
       return ActionFlags.RefreshItems;
     },
     rebaseTo: async ({ denops, items }) => {
@@ -150,7 +156,7 @@ export class Kind extends BaseKind<Params> {
           ? refName.branch
           : `${refName.remote}/${refName.branch}`,
       );
-      await pipe(denops, "git", { cwd, args });
+      await echoallCommand(denops, "git", { cwd, args });
       return ActionFlags.None;
     },
     rename: async ({ denops, items }) => {
@@ -164,7 +170,7 @@ export class Kind extends BaseKind<Params> {
         `Rename branch name ${refName.branch} => `,
         refName.branch,
       );
-      await pipe(denops, "git", {
+      await echoallCommand(denops, "git", {
         cwd,
         args: ["branch", "-m", refName.branch, branchName],
       });
