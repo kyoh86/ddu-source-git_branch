@@ -9,8 +9,8 @@ import type {
 } from "https://deno.land/x/ddu_vim@v3.9.0/types.ts";
 import type { Denops } from "https://deno.land/x/ddu_vim@v3.9.0/deps.ts";
 import { fn } from "https://deno.land/x/ddu_vim@v3.9.0/deps.ts";
-import { echoallCommand } from "https://denopkg.com/kyoh86/denops-util@v0.0.3/command.ts";
-import { yank } from "https://denopkg.com/kyoh86/denops-util@v0.0.3/yank.ts";
+import { echoallCommand } from "https://denopkg.com/kyoh86/denops-util@v0.0.4/command.ts";
+import { yank } from "https://denopkg.com/kyoh86/denops-util@v0.0.4/yank.ts";
 import { GetPreviewerArguments } from "https://deno.land/x/ddu_vim@v3.9.0/base/kind.ts";
 
 export type ActionData = {
