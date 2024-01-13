@@ -17,12 +17,12 @@ export class Column extends BaseColumn<Params> {
   ): Promise<GetTextResult> {
     const action = item?.action as ActionData;
     return Promise.resolve({
-      text: action.isHead ? "*" : " ",
+      text: action.isHead ? "* " : "  ",
       highlights: [{
         name: "dduColumnGitBranchHead0",
         hl_group: "dduColumnGitBranchHead",
         col: startCol,
-        width: 1,
+        width: 2,
       }],
     });
   }

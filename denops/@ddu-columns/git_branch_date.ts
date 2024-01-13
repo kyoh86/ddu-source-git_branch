@@ -11,12 +11,12 @@ export class Column extends GitBranchBaseColumn {
     rawText: string;
     highlights?: ItemHighlight[];
   }> {
-    const rawText = date;
+    const rawText = date + " ";
     return {
       rawText,
       highlights: [{
         col: 0,
-        width: await strwidth(denops, rawText),
+        width: await strwidth(denops, rawText) + 1,
         hl_group: `dduColumnGitBranchDate`,
         name: `dduColumnGitBranchDate0`,
       }],

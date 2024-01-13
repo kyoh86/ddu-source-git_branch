@@ -12,13 +12,13 @@ export class Column extends GitBranchBaseColumn {
     highlights?: ItemHighlight[];
   }> {
     const rawText = upstream.remote == ""
-      ? upstream.branch
-      : `${upstream.remote}/${upstream.branch}`;
+      ? upstream.branch + " "
+      : `${upstream.remote}/${upstream.branch}` + " ";
     return {
       rawText,
       highlights: [{
         col: 0,
-        width: await strwidth(denops, rawText),
+        width: await strwidth(denops, rawText) + 1,
         hl_group: `dduColumnGitBranchUpstream`,
         name: `dduColumnGitBranchUpstream0`,
       }],

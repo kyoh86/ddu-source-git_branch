@@ -11,12 +11,12 @@ export class Column extends GitBranchBaseColumn {
     rawText: string;
     highlights?: ItemHighlight[];
   }> {
-    const rawText = refName.remote == "" ? "local" : refName.remote;
+    const rawText = refName.remote == "" ? "local " : refName.remote + " ";
     return {
       rawText,
       highlights: [{
         col: 0,
-        width: await strwidth(denops, rawText),
+        width: await strwidth(denops, rawText) + 1,
         hl_group: `dduColumnGitBranch${
           refName.remote == "" ? "Local" : "Remote"
         }`,

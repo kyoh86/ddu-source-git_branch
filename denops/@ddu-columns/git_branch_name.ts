@@ -11,12 +11,12 @@ export class Column extends GitBranchBaseColumn {
     rawText: string;
     highlights?: ItemHighlight[];
   }> {
-    const rawText = refName.branch;
+    const rawText = refName.branch + " ";
     return {
       rawText,
       highlights: [{
         col: 0,
-        width: await strwidth(denops, rawText),
+        width: await strwidth(denops, rawText) + 1,
         hl_group: `dduColumnGitBranchName`,
         name: `dduColumnGitBranchName0`,
       }],
