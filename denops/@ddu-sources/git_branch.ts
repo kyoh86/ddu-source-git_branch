@@ -6,7 +6,7 @@ import { ChunkedStream } from "https://deno.land/x/chunked_stream@0.1.2/mod.ts";
 
 import { ActionData, RefName } from "../@ddu-kinds/git_branch.ts";
 import { echoerrCommand } from "https://denopkg.com/kyoh86/denops-util@v0.0.6/command.ts";
-import { TextLineStream } from "https://deno.land/std@0.215.0/streams/mod.ts";
+import { TextLineStream } from "https://deno.land/std@0.216.0/streams/mod.ts";
 
 type Params = {
   remote: boolean;
