@@ -5,7 +5,7 @@ import { BaseSource, Item } from "https://deno.land/x/ddu_vim@v3.10.3/types.ts";
 import { ChunkedStream } from "https://deno.land/x/chunked_stream@0.1.4/mod.ts";
 
 import { ActionData, RefName } from "../@ddu-kinds/git_branch.ts";
-import { echoerrCommand } from "https://denopkg.com/kyoh86/denops-util@v0.0.6/command.ts";
+import { echoerrCommand } from "https://denopkg.com/kyoh86/denops-util@v0.0.7/command.ts";
 import { TextLineStream } from "https://deno.land/std@0.219.1/streams/mod.ts";
 
 type Params = {
@@ -105,7 +105,7 @@ export class Source extends BaseSource<Params, ActionData> {
         }
         const cwd = sourceParams.cwd ??
           (path && path !== "" ? path : await fn.getcwd(denops));
-        const { waitErr, pipeOut, finalize } = echoerrCommand(denops, "git", {
+        const { wait, pipeOut, finalize } = echoerrCommand(denops, "git", {
           args: [
             "for-each-ref",
             "--omit-empty",
@@ -115,22 +115,24 @@ export class Source extends BaseSource<Params, ActionData> {
           cwd,
         });
 
-        await pipeOut
-          .pipeThrough(new TextLineStream())
-          .pipeThrough(new ChunkedStream({ chunkSize: 1000 }))
-          .pipeTo(
-            new WritableStream<string[]>({
-              write: (refs: string[]) => {
-                controller.enqueue(
-                  flatMapRefs(refs, sourceParams, cwd),
-                );
-              },
-            }),
-          ).finally(async () => {
-            controller.close();
-            await waitErr;
-            await finalize();
-          });
+        await Promise.all([
+          pipeOut
+            .pipeThrough(new TextLineStream())
+            .pipeThrough(new ChunkedStream({ chunkSize: 1000 }))
+            .pipeTo(
+              new WritableStream<string[]>({
+                write: (refs: string[]) => {
+                  controller.enqueue(
+                    flatMapRefs(refs, sourceParams, cwd),
+                  );
+                },
+              }),
+            ),
+          wait,
+        ]).finally(async () => {
+          controller.close();
+          await finalize();
+        });
       },
     });
   }
