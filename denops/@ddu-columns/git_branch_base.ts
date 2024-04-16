@@ -1,13 +1,13 @@
-import { BaseColumn } from "https://deno.land/x/ddu_vim@v3.10.3/types.ts";
+import { BaseColumn } from "https://deno.land/x/ddu_vim@v4.0.0/types.ts";
 import type {
   DduItem,
   ItemHighlight,
-} from "https://deno.land/x/ddu_vim@v3.10.3/types.ts";
+} from "https://deno.land/x/ddu_vim@v4.0.0/types.ts";
 import {
   GetTextArguments,
   GetTextResult,
-} from "https://deno.land/x/ddu_vim@v3.10.3/base/column.ts";
-import { Denops, fn } from "https://deno.land/x/ddu_vim@v3.10.3/deps.ts";
+} from "https://deno.land/x/ddu_vim@v4.0.0/base/column.ts";
+import { Denops, fn } from "https://deno.land/x/ddu_vim@v4.0.0/deps.ts";
 import { ActionData } from "../@ddu-kinds/git_branch.ts";
 
 type Params = {

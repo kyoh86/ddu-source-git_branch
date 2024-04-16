@@ -1,6 +1,6 @@
 import type {
   ItemHighlight,
-} from "https://deno.land/x/ddu_vim@v3.10.3/types.ts";
+} from "https://deno.land/x/ddu_vim@v4.0.0/types.ts";
 import { ActionData } from "../@ddu-kinds/git_branch.ts";
 import { GitBranchBaseColumn } from "./git_branch_base.ts";
 import type { Denops } from "https://deno.land/x/denops_std@v6.4.0/mod.ts";
