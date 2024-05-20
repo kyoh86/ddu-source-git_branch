@@ -2,8 +2,8 @@ import { ActionData } from "../@ddu-kinds/git_branch.ts";
 import {
   GetTextArguments,
   GetTextResult,
-} from "https://deno.land/x/ddu_vim@v4.0.0/base/column.ts";
-import { BaseColumn } from "https://deno.land/x/ddu_vim@v4.0.0/types.ts";
+} from "https://deno.land/x/ddu_vim@v4.1.0/base/column.ts";
+import { BaseColumn } from "https://deno.land/x/ddu_vim@v4.1.0/types.ts";
 
 type Params = Record<PropertyKey, never>;
 
@@ -25,6 +25,10 @@ export class Column extends BaseColumn<Params> {
         width: 2,
       }],
     });
+  }
+
+  override getBaseText(): string {
+    return "  ";
   }
 
   override params(): Params {
