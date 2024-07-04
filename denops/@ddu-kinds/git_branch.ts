@@ -5,7 +5,7 @@ import {
   type DduItem,
   type Previewer,
 } from "https://deno.land/x/ddu_vim@v4.1.1/types.ts";
-import type { Denops } from "https://deno.land/x/ddu_vim@v4.1.0/deps.ts";
+import type { Denops } from "https://deno.land/x/ddu_vim@v4.1.1/deps.ts";
 import { fn } from "https://deno.land/x/ddu_vim@v4.1.1/deps.ts";
 import { echoallCommand } from "https://denopkg.com/kyoh86/denops-util@master/command.ts";
 import { yank } from "https://denopkg.com/kyoh86/denops-util@master/yank.ts";
