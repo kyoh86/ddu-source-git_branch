@@ -2,13 +2,14 @@ import {
   BaseColumn,
   type DduItem,
   type ItemHighlight,
-} from "https://deno.land/x/ddu_vim@v4.1.1/types.ts";
-import {
+} from "jsr:@shougo/ddu-vim@5.0.0/types";
+import type {
   GetTextArguments,
   GetTextResult,
-} from "https://deno.land/x/ddu_vim@v4.1.1/base/column.ts";
-import { Denops, fn } from "https://deno.land/x/ddu_vim@v4.1.1/deps.ts";
-import { ActionData } from "../@ddu-kinds/git_branch.ts";
+} from "jsr:@shougo/ddu-vim@5.0.0/column";
+import type { Denops } from "jsr:@denops/std@7.0.1";
+import * as fn from "jsr:@denops/std@7.0.1/function";
+import type { ActionData } from "../@ddu-kinds/git_branch.ts";
 
 type Params = {
   limitLength: number;

@@ -1,10 +1,8 @@
-import type {
-  ItemHighlight,
-} from "https://deno.land/x/ddu_vim@v4.1.1/types.ts";
-import { ActionData } from "../@ddu-kinds/git_branch.ts";
+import type { ItemHighlight } from "jsr:@shougo/ddu-vim@5.0.0/types";
+import type { ActionData } from "../@ddu-kinds/git_branch.ts";
 import { GitBranchBaseColumn } from "./git_branch_base.ts";
-import type { Denops } from "https://deno.land/x/denops_std@v6.5.1/mod.ts";
-import { strwidth } from "https://deno.land/x/denops_std@v6.5.1/function/mod.ts";
+import type { Denops } from "jsr:@denops/std@7.0.1";
+import { strwidth } from "jsr:@denops/std@7.0.1/function";
 
 export class Column extends GitBranchBaseColumn {
   override async getAttr(denops: Denops, { upstream }: ActionData): Promise<{

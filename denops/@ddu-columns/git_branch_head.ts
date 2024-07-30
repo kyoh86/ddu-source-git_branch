@@ -1,9 +1,9 @@
-import { ActionData } from "../@ddu-kinds/git_branch.ts";
-import {
+import type { ActionData } from "../@ddu-kinds/git_branch.ts";
+import type {
   GetTextArguments,
   GetTextResult,
-} from "https://deno.land/x/ddu_vim@v4.1.1/base/column.ts";
-import { BaseColumn } from "https://deno.land/x/ddu_vim@v4.1.1/types.ts";
+} from "jsr:@shougo/ddu-vim@5.0.0/column";
+import { BaseColumn } from "jsr:@shougo/ddu-vim@5.0.0/types";
 
 type Params = Record<PropertyKey, never>;
 
