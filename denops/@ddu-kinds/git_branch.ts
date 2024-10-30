@@ -3,13 +3,13 @@ import {
   type Actions,
   type DduItem,
   type Previewer,
-} from "jsr:@shougo/ddu-vim@~6.1.0/types";
-import { BaseKind } from "jsr:@shougo/ddu-vim@~6.1.0/kind";
-import type { Denops } from "jsr:@denops/std@~7.1.0";
-import * as fn from "jsr:@denops/std@~7.1.0/function";
+} from "jsr:@shougo/ddu-vim@~6.2.0/types";
+import { BaseKind } from "jsr:@shougo/ddu-vim@~6.2.0/kind";
+import type { Denops } from "jsr:@denops/std@~7.3.0";
+import * as fn from "jsr:@denops/std@~7.3.0/function";
 import { echoallCommand } from "jsr:@kyoh86/denops-util@~0.1.0/command";
 import { yank } from "jsr:@kyoh86/denops-util@~0.1.0/yank";
-import type { GetPreviewerArguments } from "jsr:@shougo/ddu-vim@~6.1.0/kind";
+import type { GetPreviewerArguments } from "jsr:@shougo/ddu-vim@~6.2.0/kind";
 
 export type ActionData = {
   isHead: boolean;
@@ -179,7 +179,7 @@ export class Kind extends BaseKind<Params> {
     return {};
   }
 
-  async getPreviewer({
+  override async getPreviewer({
     item,
   }: GetPreviewerArguments): Promise<Previewer | undefined> {
     const { cwd, refName } = item.action as ActionData;
