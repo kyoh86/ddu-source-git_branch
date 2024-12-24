@@ -1,4 +1,4 @@
-import type { ItemHighlight } from "jsr:@shougo/ddu-vim@~9.1.0/types";
+import type { ItemHighlight } from "jsr:@shougo/ddu-vim@~9.2.0/types";
 import type { ActionData } from "../@ddu-kinds/git_branch.ts";
 import { GitBranchBaseColumn } from "./git_branch_base.ts";
 import type { Denops } from "jsr:@denops/std@~7.4.0";
