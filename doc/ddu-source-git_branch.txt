@@ -1,4 +1,4 @@
-*ddu-source-git_branch.txt*		git branch source for ddu.vim
+*ddu-source-git_branch.txt*        git branch source for ddu.vim
 
 Author: kyoh86 <me@kyoh86.dev>
 License: MIT License
@@ -9,13 +9,13 @@ URL: https://github.com/kyoh86/ddu-source-git_branch
                                               *ddu-source-git_branch-contents*
 Contents ~
 
-Introduction				|ddu-source-git_branch-introdution|
-Install					|ddu-source-git_branch-install|
-Examples				|ddu-source-git_branch-examples|
-Params					|ddu-source-git_branch-params|
-Action Data				|ddu-source-git_branch-action-data|
-Actions					|ddu-source-git_branch-actions|
-About					|ddu-source-git_branch-about|
+Introduction                |ddu-source-git_branch-introdution|
+Install                     |ddu-source-git_branch-install|
+Examples                    |ddu-source-git_branch-examples|
+Params                      |ddu-source-git_branch-params|
+Action Data                 |ddu-source-git_branch-action-data|
+Actions                     |ddu-source-git_branch-actions|
+About                       |ddu-source-git_branch-about|
 
 
 ==============================================================================
@@ -43,44 +43,44 @@ https://github.com/vim-denops/denops.vim
 Examples ~
 
 >
-	" Use git_branch source.
-	call ddu#start({
-	    \ 'sources': [{
-	    \    'name': 'git_branch',
-	    \ }],
-	    \ 'kindOptions': { 'git_branch': { 'defaultAction': 'switch' } }
-	    \ })
+    " Use git_branch source.
+    call ddu#start({
+        \ 'sources': [{
+        \    'name': 'git_branch',
+        \ }],
+        \ 'kindOptions': { 'git_branch': { 'defaultAction': 'switch' } }
+        \ })
 <
 
 >
-	" Use git_diff_tree source in the specified path.
-	" Call it for the current buffer for example:
-	call ddu#start({
-	    \ 'sources': [{
-	    \    'name': 'git_branch',
-	    \    'options': { 'path': expand("%:p") }
-	    \ }],
-	    \ 'kindOptions': { 'git_branch': { 'defaultAction': 'switch' } }
-	    \ })
+    " Use git_diff_tree source in the specified path.
+    " Call it for the current buffer for example:
+    call ddu#start({
+        \ 'sources': [{
+        \    'name': 'git_branch',
+        \    'options': { 'path': expand("%:p") }
+        \ }],
+        \ 'kindOptions': { 'git_branch': { 'defaultAction': 'switch' } }
+        \ })
 <
 
 >
-	" Use git_branch source with columns.
-	call ddu#start({
-	    \ 'sources': [{
-	    \    'name': 'git_branch',
-	    \    'options': #{
-	    \      'columns': [
-	    \        'git_branch_head',
-	    \        'git_branch_remote',
-	    \        'git_branch_name',
-	    \        'git_branch_upstream',
-	    \        'git_branch_author',
-	    \      ],
-	    \    },
-	    \ }],
-	    \ 'kindOptions': { 'git_branch': { 'defaultAction': 'switch' } }
-	    \ })
+    " Use git_branch source with columns.
+    call ddu#start({
+        \ 'sources': [{
+        \    'name': 'git_branch',
+        \    'options': #{
+        \      'columns': [
+        \        'git_branch_head',
+        \        'git_branch_remote',
+        \        'git_branch_name',
+        \        'git_branch_upstream',
+        \        'git_branch_author',
+        \      ],
+        \    },
+        \ }],
+        \ 'kindOptions': { 'git_branch': { 'defaultAction': 'switch' } }
+        \ })
 <
 
 
@@ -90,22 +90,22 @@ Params ~
 
                                          *ddu-source-git_branch-params-remote*
 remote
-	(boolean)
-	Shows remote branches.
+    (boolean)
+    Shows remote branches.
 
-	Default: false
+    Default: false
 
                                           *ddu-source-git_branch-params-local*
 local
-	(boolean)
-	Shows local branches.
+    (boolean)
+    Shows local branches.
 
-	Default: true
+    Default: true
 
                                             *ddu-source-git_branch-params-cwd*
 cwd
-	(string)
-	DEPRECATED. Use |ddu-source-option-path| instead.
+    (string)
+    DEPRECATED. Use |ddu-source-option-path| instead.
 
 
 ==============================================================================
@@ -116,29 +116,29 @@ This source generates action-data with properties below.
 
 
 isHead
-	(boolean)
-	Whether the branch points current HEAD.
-	
+    (boolean)
+    Whether the branch points current HEAD.
+
 refName
-	(RefName)
-	A name of the branch.
+    (RefName)
+    A name of the branch.
 
 upstream
-	(RefName)
-	A name of the upstream that the branch tracking to.
+    (RefName)
+    A name of the upstream that the branch tracking to.
 
 author
-	(string)
-	A name of the author of the last commit in the branch.
+    (string)
+    A name of the author of the last commit in the branch.
 
 date
-	(string)
-	A date of the last commit in the branch.
+    (string)
+    A date of the last commit in the branch.
 
 cwd
-	(string)
-	A current directory that is guessed in source.
-	This is used for call `git` to get sources.
+    (string)
+    A current directory that is guessed in source.
+    This is used for call `git` to get sources.
 
 
 ==============================================================================
@@ -147,35 +147,35 @@ Actions ~
 
                                          *ddu-source-git_branch-action-switch*
 switch
-	Switches to the selected branch.
+    Switches to the selected branch.
 
                                          *ddu-source-git_branch-action-delete*
 delete
-	Delete the selected branch if it is fully merged.
+    Delete the selected branch if it is fully merged.
 
                                     *ddu-source-git_branch-action-deleteForce*
 deleteForce
-	Delete the selected branch (even if not merged).
+    Delete the selected branch (even if not merged).
 
                                      *ddu-source-git_branch-action-createFrom*
 createFrom
-	Create a new branch based on the selected branch.
+    Create a new branch based on the selected branch.
 
                                          *ddu-source-git_branch-action-create*
 create
-	Create a new branch based on the point that HEAD currently points.
+    Create a new branch based on the point that HEAD currently points.
 
                                        *ddu-source-git_branch-action-rebaseTo*
 rebaseTo
-	Rebase to the selected branch.
+    Rebase to the selected branch.
 
                                          *ddu-source-git_branch-action-rename*
 rename
-	Rename a selected branch.
+    Rename a selected branch.
 
                                        *ddu-source-git_branch-action-yankName*
 yankName
-	Yank a name of the selected branch.
+    Yank a name of the selected branch.
 
 
 ==============================================================================
@@ -184,29 +184,29 @@ Columns ~
 
                                                   *ddu-column-git_branch_head*
 git_branch_head
-	Mark (*) for the current HEAD branch.
+    Mark (*) for the current HEAD branch.
 
                                                 *ddu-column-git_branch_remote*
 git_branch_remote
-	Remote name (like "origin") or "local".
+    Remote name (like "origin") or "local".
 
                                                   *ddu-column-git_branch_name*
 git_branch_name
-	Name of the branch
+    Name of the branch
 
                                               *ddu-column-git_branch_upstream*
 git_branch_upstream
-	Name of the upstream branch (like "origin/main")
+    Name of the upstream branch (like "origin/main")
 
                                                 *ddu-column-git_branch_author*
 git_branch_author
-	The author of the last commit of the branch
+    The author of the last commit of the branch
 
 
                                                   *ddu-column-git_branch_date*
 git_branch_date
-	The date of the last commit of the branch
+    The date of the last commit of the branch
 
 
 ==============================================================================
-vim:tw=78:ts=8:ft=help:norl:noet:fen:
+" vim:tw=78:nosi:sts=4:ts=4:sw=4:et:ft=help:norl:
