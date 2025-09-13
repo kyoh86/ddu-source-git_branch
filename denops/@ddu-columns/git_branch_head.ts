@@ -3,7 +3,7 @@ import {
   BaseColumn,
   type GetTextArguments,
   type GetTextResult,
-} from "jsr:@shougo/ddu-vim@~10.3.0/column";
+} from "jsr:@shougo/ddu-vim@~11.1.0/column";
 
 type Params = Record<PropertyKey, never>;
 
