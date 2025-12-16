@@ -1,8 +1,8 @@
-import type { ItemHighlight } from "jsr:@shougo/ddu-vim@~11.1.0/types";
+import type { ItemHighlight } from "@shougo/ddu-vim/types";
 import type { ActionData } from "../@ddu-kinds/git_branch.ts";
 import { GitBranchBaseColumn } from "./git_branch_base.ts";
-import type { Denops } from "jsr:@denops/std@~8.0.0";
-import { strwidth } from "jsr:@denops/std@~8.0.0/function";
+import type { Denops } from "@denops/std";
+import { strwidth } from "@denops/std/function";
 
 export class Column extends GitBranchBaseColumn {
   override async getAttr(denops: Denops, { date }: ActionData): Promise<{

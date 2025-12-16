@@ -1,13 +1,13 @@
-import type { GatherArguments } from "jsr:@shougo/ddu-vim@~11.1.0/source";
-import * as fn from "jsr:@denops/std@~8.0.0/function";
-import { treePath2Filename } from "jsr:@shougo/ddu-vim@~11.1.0/utils";
-import type { Item } from "jsr:@shougo/ddu-vim@~11.1.0/types";
-import { BaseSource } from "jsr:@shougo/ddu-vim@~11.1.0/source";
-import { ChunkedStream } from "jsr:@hibiki/chunked-stream@~0.1.4";
+import type { GatherArguments } from "@shougo/ddu-vim/source";
+import * as fn from "@denops/std/function";
+import { treePath2Filename } from "@shougo/ddu-vim/utils";
+import type { Item } from "@shougo/ddu-vim/types";
+import { BaseSource } from "@shougo/ddu-vim/source";
+import { ChunkedStream } from "@hibiki/chunked-stream";
 
 import type { ActionData, RefName } from "../@ddu-kinds/git_branch.ts";
-import { echoerrCommand } from "jsr:@kyoh86/denops-util@~0.1.0/command";
-import { TextLineStream } from "jsr:@std/streams@~1.0.0";
+import { echoerrCommand } from "@kyoh86/denops-util/command";
+import { TextLineStream } from "@std/streams";
 
 type Params = {
   remote: boolean;

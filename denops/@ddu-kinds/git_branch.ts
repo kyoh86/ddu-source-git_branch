@@ -3,13 +3,13 @@ import {
   type Actions,
   type DduItem,
   type Previewer,
-} from "jsr:@shougo/ddu-vim@~11.1.0/types";
-import { BaseKind } from "jsr:@shougo/ddu-vim@~11.1.0/kind";
-import type { Denops } from "jsr:@denops/std@~8.0.0";
-import * as fn from "jsr:@denops/std@~8.0.0/function";
-import { echoallCommand } from "jsr:@kyoh86/denops-util@~0.1.0/command";
-import { yank } from "jsr:@kyoh86/denops-util@~0.1.0/yank";
-import type { GetPreviewerArguments } from "jsr:@shougo/ddu-vim@~11.1.0/kind";
+} from "@shougo/ddu-vim/types";
+import { BaseKind } from "@shougo/ddu-vim/kind";
+import type { Denops } from "@denops/std";
+import * as fn from "@denops/std/function";
+import { echoallCommand } from "@kyoh86/denops-util/command";
+import { yank } from "@kyoh86/denops-util/yank";
+import type { GetPreviewerArguments } from "@shougo/ddu-vim/kind";
 
 export type ActionData = {
   isHead: boolean;
