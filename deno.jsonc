@@ -5,17 +5,37 @@
   "description": "ddu.vim source shows branches in the repository",
   "exports": {},
   "lock": false,
-  "fmt": { "include": ["./**/*.ts", "deno.jsonc"] },
-  "lint": { "include": ["./**/*.ts", "deno.jsonc"] },
-  "test": { "include": ["./**/*_test.ts"] },
+  "fmt": {
+    "include": [
+      "./**/*.ts",
+      "deno.jsonc"
+    ]
+  },
+  "lint": {
+    "include": [
+      "./**/*.ts",
+      "deno.jsonc"
+    ]
+  },
+  "test": {
+    "include": [
+      "./**/*_test.ts"
+    ]
+  },
   "tasks": {
     "update": "deno outdated --update",
     "test": "deno test --check --permit-no-files --allow-env=DENOPS_TEST_CONNECT_TIMEOUT,DENOPS_TEST_DENOPS_PATH,DENOPS_TEST_VERBOSE,DENOPS_TEST_VIM_EXECUTABLE,DENOPS_TEST_NVIM_EXECUTABLE,MSGPACKR_NATIVE_ACCELERATION_DISABLED --allow-run=vim,nvim --allow-net=127.0.0.1:0 --allow-read"
   },
   "workspace": [
-    "./denops/@ddu-sources",
-    "./denops/@ddu-columns",
-    "./denops/@ddu-kinds"
+    "./denops/@ddu-columns/git_branch_author",
+    "./denops/@ddu-columns/git_branch_base",
+    "./denops/@ddu-columns/git_branch_date",
+    "./denops/@ddu-columns/git_branch_head",
+    "./denops/@ddu-columns/git_branch_name",
+    "./denops/@ddu-columns/git_branch_remote",
+    "./denops/@ddu-columns/git_branch_upstream",
+    "./denops/@ddu-kinds/git_branch",
+    "./denops/@ddu-sources/git_branch"
   ],
   "imports": {
     "@denops/test": "jsr:@denops/test@^4.0.0",

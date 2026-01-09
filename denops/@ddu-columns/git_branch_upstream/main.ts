@@ -1,6 +1,6 @@
 import type { ItemHighlight } from "@shougo/ddu-vim/types";
-import type { ActionData } from "../@ddu-kinds/git_branch.ts";
-import { GitBranchBaseColumn } from "./git_branch_base.ts";
+import type { ActionData } from "../../@ddu-kinds/git_branch/main.ts";
+import { GitBranchBaseColumn } from "../git_branch_base/main.ts";
 import type { Denops } from "@denops/std";
 import { strwidth } from "@denops/std/function";
 

@@ -5,7 +5,7 @@ import type { Item } from "@shougo/ddu-vim/types";
 import { BaseSource } from "@shougo/ddu-vim/source";
 import { ChunkedStream } from "@hibiki/chunked-stream";
 
-import type { ActionData, RefName } from "../@ddu-kinds/git_branch.ts";
+import type { ActionData, RefName } from "../../@ddu-kinds/git_branch/main.ts";
 import { echoerrCommand } from "@kyoh86/denops-util/command";
 import { TextLineStream } from "@std/streams";
 

@@ -1,4 +1,4 @@
-import type { ActionData } from "../@ddu-kinds/git_branch.ts";
+import type { ActionData } from "../../@ddu-kinds/git_branch/main.ts";
 import {
   BaseColumn,
   type GetTextArguments,
